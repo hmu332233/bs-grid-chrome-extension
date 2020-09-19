@@ -1,44 +1,12 @@
 function showGrid() {
+	const columnCount = 12;
+	const createColumnHtml = ({ size, index }) => `<div class="col-sm-${size}"><div>${index + 1}</div></div>`;
+	const columnHtmls = new Array(columnCount).fill('').map((value, index) => createColumnHtml({ size: 12 / columnCount, index })).join('');
 	$('body').append(`
 		<div id="forh-bs-grid">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-1">
-						<div>1</div>
-					</div>
-					<div class="col-sm-1">
-						<div>2</div>
-					</div>
-					<div class="col-sm-1">
-						<div>3</div>
-					</div>
-					<div class="col-sm-1">
-						<div>4</div>
-					</div>
-					<div class="col-sm-1">
-						<div>5</div>
-					</div>
-					<div class="col-sm-1">
-						<div>6</div>
-					</div>
-					<div class="col-sm-1">
-						<div>7</div>
-					</div>
-					<div class="col-sm-1">
-						<div>8</div>
-					</div>
-					<div class="col-sm-1">
-						<div>9</div>
-					</div>
-					<div class="col-sm-1">
-						<div>10</div>
-					</div>
-					<div class="col-sm-1">
-						<div>11</div>
-					</div>
-					<div class="col-sm-1">
-						<div>12</div>
-					</div>
+				  ${columnHtmls}
 				</div>
 			</div>
 		</div>
