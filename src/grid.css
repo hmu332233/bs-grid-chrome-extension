@@ -55,4 +55,5 @@
 
 [data-element-id="grid-form"] input {
 	width: 35px;
+	pointer-events: all;
 }

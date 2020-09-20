@@ -8,7 +8,7 @@ function showGrid() {
     .map((value, index) => createColumnHtml({ size: 12 / columnCount, index }))
     .join("");
 
-  $("body").append(`
+  document.body.insertAdjacentHTML('beforeend', `
 		<div data-element-id="grid-root">	
 			<div data-element-id="grid">
 				<div class="container">
@@ -29,14 +29,16 @@ function showGrid() {
 			</div>
 		</div>
 	`);
+
+	// $("[data-element-id='grid-form] input')
 }
 
 function removeGrid() {
-  $("[data-element-id='grid-root']").remove();
+  document.querySelector("[data-element-id='grid-root']").remove();
 }
 
-if ($("body").find("[data-element-id='grid-root']").length === 0) {
-  showGrid();
+if (document.querySelector("[data-element-id='grid-root']")) {
+	removeGrid();
 } else {
-  removeGrid();
+  showGrid();
 }
