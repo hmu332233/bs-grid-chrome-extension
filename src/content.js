@@ -1,5 +1,4 @@
-function showGrid() {
-  const columnCount = 12;
+function createGridHtml(columnCount) {
   const createColumnHtml = ({ size, index }) =>
     `<div class="col-sm-${size}"><div>${index + 1}</div></div>`;
 
@@ -8,15 +7,23 @@ function showGrid() {
     .map((value, index) => createColumnHtml({ size: 12 / columnCount, index }))
     .join("");
 
-  document.body.insertAdjacentHTML('beforeend', `
-		<div data-element-id="grid-root">	
-			<div data-element-id="grid">
-				<div class="container">
-					<div class="row">
-						${columnHtmls}
-					</div>
+  return `
+		<div data-element-id="grid">
+			<div class="container">
+				<div class="row">
+					${columnHtmls}
 				</div>
 			</div>
+		</div>
+	`;
+}
+
+function showGrid() {
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `
+		<div data-element-id="grid-root">	
+			${createGridHtml(12)}
 			<div data-element-id="breakpoint-helpers" class="d-block">
 				<div data-element-id="breakpoint-helper" class="d-block d-sm-none">XS</div>
 				<div data-element-id="breakpoint-helper" class="d-none d-sm-block d-md-none">SM</div>
@@ -28,9 +35,23 @@ function showGrid() {
 				<input value="12">
 			</div>
 		</div>
-	`);
+		`
+  );
 
-	// $("[data-element-id='grid-form] input')
+  document
+    .querySelector("[data-element-id='grid-form'] input")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.querySelector("[data-element-id='grid']").remove();
+        document
+          .querySelector("[data-element-id='grid-root']")
+          .insertAdjacentHTML(
+            "afterbegin",
+            createGridHtml(parseInt(event.target.value))
+          );
+      }
+    });
 }
 
 function removeGrid() {
@@ -38,7 +59,7 @@ function removeGrid() {
 }
 
 if (document.querySelector("[data-element-id='grid-root']")) {
-	removeGrid();
+  removeGrid();
 } else {
   showGrid();
 }
